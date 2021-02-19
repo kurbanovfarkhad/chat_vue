@@ -1,6 +1,6 @@
 <template>
   <div class="base">
-    <div class="wrap">
+    <div class="wrap" id="scroll" ref="test" v-if="messageList">
       <Message @chooseMessage="edit" v-bind:key="message.id" v-for="message in messageList"
                :message="message"></Message>
     </div>
@@ -25,9 +25,11 @@ export default {
   },
   computed: {
     ...mapGetters(["get"]),
-    messageList() {
+    messageList: {
+      get() {
+        return this.get("messages");
+      },
       // return null
-      return this.get("messages");
     }
   },
   methods: {
@@ -39,6 +41,11 @@ export default {
     edit(val) {
       this.message = val;
     }
+  },
+  updated() {
+    setTimeout(() => {
+    }, 200)
+    this.$refs['test'].scrollTo(0, this.$refs['test'].scrollHeight)
   }
 }
 

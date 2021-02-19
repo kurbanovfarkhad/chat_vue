@@ -11,7 +11,6 @@ export function connect() {
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/activity', message => {
-            console.error(JSON.parse(message.body))
             handlers.forEach(handler => handler(JSON.parse(message.body)));
         });
     });
